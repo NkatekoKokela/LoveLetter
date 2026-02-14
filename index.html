@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>My Love Nikitha 💖</title>
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(to top, #ffe6f2, #fff0f5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Segoe UI", sans-serif;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Floating drifting hearts */
+.heart {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: pink;
+    transform: rotate(45deg);
+    border-radius: 3px;
+    opacity: 0.8;
+    z-index: 0;
+    animation-name: drift;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+.heart.blue { background: #80d8ff; }
+.heart::before, .heart::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+.heart::before { top:-10px; left:0; }
+.heart::after { left:10px; top:0; }
+
+@keyframes drift {
+    0% { transform: translate(0px, 0px) rotate(0deg); opacity:0.8; }
+    50% { opacity:0.9; }
+    100% { transform: translate(var(--x), -600px) rotate(360deg); opacity:0; }
+}
+
+/* Container & text */
+.container {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+h1 { color: #d63384; margin-top: 20px; font-weight: 500; min-height: 40px; }
+.cursor { display: inline-block; width: 2px; background-color: #d63384; animation: blink 1s infinite; margin-left: 3px; }
+@keyframes blink { 0%,50%,100%{opacity:1;}25%,75%{opacity:0;} }
+
+p { color: #ad1457; font-size: 18px; margin-top: 10px; opacity:0; text-align:center; }
+.instruction { color: #ff80ab; font-size:18px; margin-top:15px; }
+
+/* Buttons */
+button { margin: 10px; padding: 10px 20px; border: none; border-radius: 20px; font-size: 16px; cursor: pointer; transition: 0.3s; }
+.yes { background-color: #ff80ab; color: white; }
+.yes:hover { background-color: #ff4081; box-shadow: 0 0 20px #ff4081; transform: scale(1.05); }
+.no { background-color: #f8bbd0; color: #880e4f; }
+.no:hover { transform: rotate(-10deg); }
+
+/* Garden flowers */
+#flowersContainer { margin-top: 20px; text-align: center; }
+.flowerPost {
+    display:inline-block; margin:20px; width:80px; height:80px; position:relative; cursor:pointer; transition:0.3s;
+    animation: sway 3s ease-in-out infinite alternate;
+}
+.flowerPost .petalPost { width:40px; height:40px; background:#ff69b4; border-radius:50%; position:absolute; top:20px; left:20px; transform-origin:center; transform: scale(1); transition: transform 0.3s; }
+.flowerPost .petalPost:nth-child(1){transform: rotate(0deg) scale(1);}
+.flowerPost .petalPost:nth-child(2){transform: rotate(90deg) scale(1);}
+.flowerPost .petalPost:nth-child(3){transform: rotate(180deg) scale(1);}
+.flowerPost .petalPost:nth-child(4){transform: rotate(270deg) scale(1);}
+.flowerPost .centerPost { width:20px; height:20px; background:yellow; border-radius:50%; position:absolute; top:30px; left:30px; transform: scale(1); transition: transform 0.3s; }
+
+.flowerPost.bloomed .petalPost { transform: scale(1.2); }
+.flowerPost.bloomed .centerPost { transform: scale(1.1); }
+
+@keyframes sway { 0% { transform: rotate(-5deg); } 100% { transform: rotate(5deg); } }
+
+/* Click message styling */
+#flowerMessage { 
+    margin-top:20px; 
+    font-size:20px; 
+    color:#ffd1dc; 
+    text-shadow: 1px 1px 5px #880e4f; 
+    opacity:0; 
+    transition:0.5s; 
+}
+#sweetParagraph { color:pink; font-size:18px; margin-top:30px; line-height:1.5; max-width:600px; margin-left:auto; margin-right:auto; opacity:0; transition:1s; text-align:center; }
+
+</style>
+</head>
+<body>
+
+<div class="container" id="mainContent">
+    <h1 id="typedLine"></h1><span class="cursor"></span>
+    <p id="introParagraph" style="opacity:0;"></p>
+
+    <div id="buttons" style="display:none;">
+        <button class="yes" onclick="sayYes()">Yes 💗</button>
+        <button class="no" onclick="sayNo()">No</button>
+    </div>
+</div>
+
+<script>
+// Typing function
+function typeText(element, text, speed=50, callback=null){
+    let i = 0;
+    element.style.opacity="1";
+    function typing(){
+        if(i < text.length){
+            element.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(typing, speed);
+        } else if(callback){
+            callback();
+        }
+    }
+    typing();
+}
+
+// First page typing sequence
+window.onload = function(){
+    const line1 = "Nikitha, my dearest love";
+    const para1_part1 = "I love you so much, but for now, I want you to spend the rest of your life with me.";
+    const para1_part2 = "Will you spend the rest of your life with me?";
+
+    // Type first line
+    typeText(document.getElementById("typedLine"), line1, 100, function(){
+        // Type first part of paragraph
+        typeText(document.getElementById("introParagraph"), para1_part1 + "<br>", 50, function(){
+            // Then type second part after the break
+            typeText(document.getElementById("introParagraph"), para1_part2, 50, function(){
+                document.getElementById("buttons").style.display="block";
+            });
+        });
+    });
+}
+function sayNo(){ 
+    alert("Please click Yes 🥺💖"); 
+}
+
+function sayYes(){
+    document.body.style.background="black";
+
+    // Add floating hearts
+    for(let i=0;i<30;i++){
+        let heart=document.createElement("div");
+        heart.className="heart";
+        heart.style.left=Math.random()*window.innerWidth+"px";
+        heart.style.width=(10+Math.random()*20)+"px";
+        heart.style.height=heart.style.width;
+        heart.style.setProperty('--x', ((Math.random()*200)-100)+'px'); // drift left/right
+        heart.style.animationDuration=(5+Math.random()*5)+"s";
+        if(Math.random()>0.5) heart.classList.add("blue");
+        document.body.appendChild(heart);
+    }
+
+    // Show garden page
+    const gardenHTML = `
+        <div style="color:white;">
+            <p id="gardenMessage"></p>
+            <p id="flowersInstruction" style="opacity:0;"></p>
+            <div id="flowersContainer">
+                <div class="flowerPost" onclick="bloomFlower(this,'You make me smile every day 🌸')">
+                    <div class="petalPost"></div><div class="petalPost"></div><div class="petalPost"></div><div class="petalPost"></div>
+                    <div class="centerPost"></div>
+                </div>
+                <div class="flowerPost" onclick="bloomFlower(this,'Every moment with you is magic ✨')">
+                    <div class="petalPost"></div><div class="petalPost"></div><div class="petalPost"></div><div class="petalPost"></div>
+                    <div class="centerPost"></div>
+                </div>
+                <div class="flowerPost" onclick="bloomFlower(this,'Our love will bloom forever 🌹')">
+                    <div class="petalPost"></div><div class="petalPost"></div><div class="petalPost"></div><div class="petalPost"></div>
+                    <div class="centerPost"></div>
+                </div>
+                <div class="flowerPost" onclick="bloomFlower(this,'I want to grow with you 💖')">
+                    <div class="petalPost"></div><div class="petalPost"></div><div class="petalPost"></div><div class="petalPost"></div>
+                    <div class="centerPost"></div>
+                </div>
+            </div>
+            <p id="flowerMessage"></p>
+            <p id="sweetParagraph"></p>
+        </div>
+    `;
+    document.getElementById("mainContent").innerHTML = gardenHTML;
+
+    const sweetText = "Nikitha my love. Like I said, you're good with your words than I am. So with the necklace I promised and I said I want to see your reaction when I put it on, this is the little something I want you to hold on to. I love you, I don't know how it happened, when it happened or why it happened, and now that you're a part of my life I want you to be a part of me as well. I love you pretty girl and I will always love you. N gicela uhlale unami and nam ngizohlala nginawe. Forever. With that said, happy Valentine's Day ntombenhle.";
+    const gardenMsg = "This is our beautiful garden. ";
+    const instructionMsg = "Please pick a flower to read your beautiful message 💖";
+
+    typeText(document.getElementById("sweetParagraph"), sweetText, 20);
+    typeText(document.getElementById("gardenMessage"), gardenMsg, 50, function(){
+        typeText(document.getElementById("flowersInstruction"), instructionMsg, 50);
+    });
+}
+
+// Bloom flower on click
+function bloomFlower(flower,msg){
+    flower.classList.add("bloomed");
+    setTimeout(()=>{
+        let m=document.getElementById("flowerMessage");
+        m.innerHTML="";
+        typeText(m,msg,40);
+        m.style.opacity="1";
+        m.style.fontFamily="'Comic Sans MS', cursive, sans-serif"; 
+    },300);
+}
+</script>
+
+</body>
+</html>
+
